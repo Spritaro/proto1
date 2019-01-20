@@ -1,2 +1,2 @@
-std_msgs/uint8 count
-proto1/proto1_servo[] servos
+uint8 count
+proto1_ros/proto1_servo[] servos
