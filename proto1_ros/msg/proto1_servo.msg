@@ -1,4 +1,4 @@
 uint8 id
-uint8 time
+uint16 time
 bool power
 float32 angle

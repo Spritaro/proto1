@@ -19,11 +19,13 @@ class Servo(object):
     start_time = 0          # always 0
     power = False
 
+servos = [ Servo() for i in range(SERVONUM) ]
+
 def servo_callback(msg):
-    # when received servo message
+    # rospy.loginfo("received message")
     for i in range(msg.count):
         servo_msg = msg.servos[i]
-        id = servo.id
+        id = msg.servos[i].id
         servos[id].end_angle = servo_msg.angle
         servos[id].start_angle = servos[id].current_angle
         servos[id].end_time = servo_msg.time
@@ -35,7 +37,7 @@ def servo_update():
         if(servo.power):
             if(servo.current_time < servo.end_time):
                 servo.current_angle = (servo.end_angle - servo.start_angle) * (servo.current_time - servo.start_time) / (servo.end_time - servo.start_time) + servo.start_angle
-                servo.current_time += 2 # 10ms -> 20ms
+                servo.current_time += 2 # 20ms
             elif(servo.current_time >= servo.end_time):
                 servo.current_angle = servo.end_angle
             # set updated angle
@@ -44,14 +46,13 @@ def servo_update():
             # power off
             pwm.set_pwm(id, 0, 0)
 
+    print(servos[5].current_time)
+
 def conv_ang(ang):
     return int((SERVOMAX - SERVOMIN) * (ang + 90.0) / 180.0 + SERVOMIN)
 
 
 if __name__ == '__main__':
-    # setup Servo instances
-    servos = [ Servo() for i in range(SERVONUM) ]
-
     # setup ros node
     rospy.loginfo("setting up ros node")
     rospy.init_node('servo_controller')
