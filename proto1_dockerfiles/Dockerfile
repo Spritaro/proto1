@@ -16,9 +16,12 @@ RUN apt-get update && apt-get -y install \
     ros-kinetic-rosbridge-server \
     ros-kinetic-tf
 
+RUN apt-get update && apt-get -y install \
+    ros-kinetic-joy
+
 WORKDIR /root/
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     python-pip python-dev \
     git-all
 

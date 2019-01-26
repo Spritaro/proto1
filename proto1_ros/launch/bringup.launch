@@ -3,15 +3,8 @@
   <!-- RosBridge -->
   <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
 
-  <!-- Rosserial -->
-  <!--
-  <node pkg="rosserial_python" type="serial_node.py" name="serial_node" />
-  -->
-
   <!-- Joy -->
-  <!--
   <node pkg="joy" type="joy_node" name="joy_node" />
-  -->
 
   <!-- Camera -->
   <node pkg="cv_camera" type="cv_camera_node" name="cv_camera" />

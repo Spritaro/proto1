@@ -8,7 +8,7 @@ from proto1_ros.msg import proto1_servo, proto1_servo_multi
 from math import pi
 
 def head_callback(msg):
-    rospy.loginfo("received head orientation")
+    # rospy.loginfo("received head orientation")
 
     # copying for simplicity
     position = msg.pose.position

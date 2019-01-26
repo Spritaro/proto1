@@ -13,7 +13,7 @@ SERVONUM = 16
 class Servo(object):
     end_angle = 0.0         # in degree
     current_angle = 0.0     # in degree
-    start_angle = 0.0       # in degree
+    start_angle = 90.0       # in degree
     end_time = 1            # in 10ms
     current_time = 0        # in 10ms
     start_time = 0          # always 0
@@ -21,8 +21,12 @@ class Servo(object):
 
 servos = [ Servo() for i in range(SERVONUM) ]
 
+servo_callback_flag = False
+
 def servo_callback(msg):
     # rospy.loginfo("received message")
+    global servo_callback_flag
+    servo_callback_flag = True
     for i in range(msg.count):
         servo_msg = msg.servos[i]
         id = msg.servos[i].id
@@ -31,6 +35,7 @@ def servo_callback(msg):
         servos[id].end_time = servo_msg.time
         servos[id].current_time = 0
         servos[id].power = servo_msg.power
+    servo_callback_flag = False
 
 def servo_update():
     for id, servo in enumerate(servos):
@@ -46,7 +51,8 @@ def servo_update():
             # power off
             pwm.set_pwm(id, 0, 0)
 
-    print(servos[5].current_time)
+    # rospy.loginfo("servo: {} {} {} {}".format(servos[5].end_angle, servos[5].start_angle, servos[5].end_time, servos[5].current_time))
+
 
 def conv_ang(ang):
     return int((SERVOMAX - SERVOMIN) * (ang + 90.0) / 180.0 + SERVOMIN)
@@ -65,5 +71,6 @@ if __name__ == '__main__':
     pwm.set_pwm_freq(50)    # 50Hz -> 20ms
 
     while not rospy.is_shutdown():
-        servo_update()
+        if(servo_callback_flag==False):
+            servo_update()
         rate.sleep()
