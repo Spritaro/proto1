@@ -3,16 +3,8 @@
 
 import rospy
 from sensor_msgs.msg import Joy
-from proto1_ros.msg import proto1_servo, proto1_servo_multi
 from math import sin, cos, acos, atan2, pi
-
-# servo
-SERVONUM = 14
-servos_msg = proto1_servo_multi()
-servos_msg.servos = [ proto1_servo() for i in range(SERVONUM) ]
-
-# [ 10., 20.-20.,-130.,0.,0., -20.,-20.-20.,-135.,0.,0., -20.,-20.,50.,  20.,-20.,50.]
-# [left foot x,y,z,roll,yaw, right foot x,y,z,roll,yaw, left shoulder pitch,roll, left elbow, right shoulder pitch,roll, right elbow]
+import Adafruit_PCA9685
 
 # joy
 joy_data = Joy()
@@ -22,6 +14,43 @@ def joy_callback(msg):
     global joy_data
     joy_data = msg
     # rospy.loginfo("joy = {}".format(joy_data))
+
+
+SERVOMIN = 103
+SERVOMAX = 490
+SERVONUM = 14
+
+class Servo(object):
+    id = 0
+    end_angle = 0.0         # in degree
+    current_angle = 0.0     # in degree
+    start_angle = 90.0       # in degree
+    end_time = 1            # in 10ms
+    current_time = 0        # in 10ms
+    start_time = 0          # always 0
+    power = False
+
+servos = [ Servo() for i in range(SERVONUM) ]
+
+
+def conv_ang(ang):
+    return int((SERVOMAX - SERVOMIN) * (ang + 90.0) / 180.0 + SERVOMIN)
+
+
+def servo_update():
+    global servos
+    for i, servo in enumerate(servos):
+        if(servo.power):
+            if(servo.current_time < servo.end_time):
+                servo.current_angle = (servo.end_angle - servo.start_angle) * (servo.current_time - servo.start_time) / (servo.end_time - servo.start_time) + servo.start_angle
+                servo.current_time += 1 # 10ms
+            if(servo.current_time >= servo.end_time):
+                servo.current_angle = servo.end_angle
+            # set updated angle
+            pwm.set_pwm(servo.id, 0, conv_ang(servo.current_angle))
+        else:
+            # power off
+            pwm.set_pwm(servo.id, 0, 0)
 
 
 # x y z (position of foot)
@@ -94,9 +123,7 @@ def ik(x, y, z, a, b):
 # right shoulder pitch, roll,
 ids = [8,9,10,11, 7,6,5,4, 12,13,14, 3,2,1]
 def set_servo_directly(time, angle):
-    global servos_msg
-
-    # fix angle
+    # offsets
     angle[0] += 20. # left thigh roll
     angle[1] += 85. # left thigh pitch
     angle[2] -= 40. # left ankle pitch
@@ -116,13 +143,16 @@ def set_servo_directly(time, angle):
     angle[13] += 50. # right elbow
 
     for i in range(SERVONUM):
-        servos_msg.servos[i].id = ids[i]
-        servos_msg.servos[i].time = time
-        servos_msg.servos[i].angle = angle[i]
-        servos_msg.servos[i].power = True
-    servos_msg.count = SERVONUM
-    pub.publish(servos_msg)
+        servos[i].id = ids[i]
+        servos[i].start_angle = servos[i].current_angle
+        servos[i].end_angle = angle[i]
+        servos[i].end_time = time
+        servos[i].current_time = 0
+        servos[i].start_time = 0    # always 0
+        servos[i].power = True
+
     for i in range(time):
+        servo_update()
         rate.sleep()
 
 
@@ -173,20 +203,20 @@ def set_servo(time, target):
 
 if __name__ == '__main__':
     # setup ros node
-    pub = rospy.Publisher('ServoAngles', proto1_servo_multi, queue_size=0)
     rospy.loginfo("setting up ros node")
     rospy.init_node('motion')
     sub = rospy.Subscriber('/joy', Joy, joy_callback)
-    rate = rospy.Rate(50) # 50Hz -> 20ms
+    rate = rospy.Rate(100) # 100Hz = 10ms cycle
+
+    # setup servo motors
+    rospy.loginfo("setting servo motors")
+    pwm = Adafruit_PCA9685.PCA9685()
+    pwm.set_pwm_freq(50)    # 50Hz = 20ms cycle
 
     # button 0:X 1:A 2:B 3:Y 4:LB 5:RB 6:LT 7:RT 8:Back 9:Start 10:LStick 11:RStick
     # axes 0:R-X 1:R+Y 2:L-X 3:LY 4:P-X 5:PY
 
     while not rospy.is_shutdown():
-        # list motions here
-
-        # set_servo_directly(500, [ -10.,-10.,-10.,-10., -10.,-10,-10.,-10., -10.,-10.,-10., -10.,-10.,-10.])
-        # set_servo_directly(500, [ 10.,10.,10.,10., 10.,10,10.,10., 10.,10.,10., 10.,10.,10.])
 
         if joy_data.axes[5] >= 1.0:
             # forward

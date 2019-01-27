@@ -15,7 +15,9 @@
   -->
 
   <!-- Controller -->
+  <!--
   <node pkg="proto1_ros" type="servo_controller.py" name="servo_controller" output="screen"/>
+  -->
   <node pkg="proto1_ros" type="motion.py" name="motion" output="screen"/>
   <node pkg="proto1_ros" type="head.py" name="head" output="screen"/>
 
