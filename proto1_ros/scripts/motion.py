@@ -219,7 +219,7 @@ if __name__ == '__main__':
     # side
     lx0, rx0 =  0.,   0.
     lx1, rx1 = 10., -10.
-    lx2, rx2 = 25., -25.
+    lx2, rx2 = 20., -20.
 
     # forward
     ly0, ry0 = -30.-20., -30.-20.
@@ -228,7 +228,7 @@ if __name__ == '__main__':
 
     # upward
     lz0, rz0 = -100, -100
-    lz1, rz1 = -140, -140
+    lz1, rz1 = -140, -141
     lz2, rz2 = -145, -145
 
     while not rospy.is_shutdown():
