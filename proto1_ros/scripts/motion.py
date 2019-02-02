@@ -127,12 +127,12 @@ def set_servo_directly(time, angle):
     angle[0] += 20. # left thigh roll
     angle[1] += 85. # left thigh pitch
     angle[2] -= 40. # left ankle pitch
-    angle[3] += 18. # left ankle roll
+    angle[3] += 18.+1. # left ankle roll
 
     angle[4] += 13. # right right roll
     angle[5] -= 30. # right thigh pitch
     angle[6] += 65. - 6. # right ankle pitch
-    angle[7] += 17. # right ankle roll
+    angle[7] += 17.+2. # right ankle roll
 
     angle[8] += 0. # left shoulder pitch
     angle[9] += 10. # left shoulder roll
@@ -227,22 +227,23 @@ if __name__ == '__main__':
     ly2, ry2 =  30.-20.,  30.-20.
 
     # upward
+    lzf, rzf = -145, -148 # first height
     lz0, rz0 = -100, -100
-    lz1, rz1 = -140, -141
-    lz2, rz2 = -145, -145
+    lz1, rz1 = -140, -140
+    lz2, rz2 = -140, -140
 
     while not rospy.is_shutdown():
 
         if joy_data.axes[5] >= 1.0:
             # forward
-            set_servo(    40,  [lx2,ly1,lz2,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
+            set_servo(    40,  [lx2,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
             set_servo(    40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
                 if not joy_data.axes[5] >= 1.0: break
-                set_servo(40,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz1,0.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
+                set_servo(40,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
                 set_servo(40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
                 if not joy_data.axes[5] >= 1.0: break
-                set_servo(40,  [lx2,ly0,lz1,0.,0., rx2,ry2,rz1,0.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # back left
+                set_servo(40,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # back left
                 set_servo(40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                 if not joy_data.axes[5] >= 1.0: break
             set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
@@ -250,16 +251,18 @@ if __name__ == '__main__':
 
         elif joy_data.axes[5] <= -1.0:
             # backward
+            set_servo(    40,  [lx2,ly1,lz1,0.,0., rx2,ry1,rzf,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick right
+            set_servo(    40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
             while True:
-                set_servo(50, [ 20., 20.-20.,-135.,0.,0., -10.,-20.-20.,-110.,0.,0., -20.,-15.,-60.,  20.,-15.,60.]) # kick left
-                set_servo(50, [ 20.,  0.-20.,-110.,0.,0., -10.,  0.-20.,-130.,0.,0., -20.,-15.,-60.,   0.,-15.,60.]) # lift left
-                if not joy_data.axes[5] <= -1.0:
-                    break
-                set_servo(50, [ 10.,-20.-20.,-130.,0.,0., -20., 20.-20.,-135.,0.,0.,  20.,-15.,-60., -20.,-15.,60.])
-                set_servo(50, [ 10.,  0.-20.,-130.,0.,0., -20.,  0.-20.,-130.,0.,0.,  20.,-15.,-60.,   0.,-15.,60.])
-                if not joy_data.axes[5] <= -1.0:
-                    break
-            set_servo(100, [ 20.,-20.,-100.,0.,0.,   -20.,-20.,-100.,0.,0., 30.,-15.,-60., 30.,-15.,-60.]) # crouch
+                if not joy_data.axes[5] <= -1.0: break
+                set_servo(40,  [lx2,ly2,lz2,0.,0., rx2,ry0,rz1,0.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # front left
+                set_servo(40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+                if not joy_data.axes[5] <= -1.0: break
+                set_servo(40,  [lx2,ly0,lz1,0.,0., rx2,ry2,rz2,0.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # front right
+                set_servo(40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
+                if not joy_data.axes[5] <= -1.0: break
+            set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
 
         elif joy_data.axes[4] <= -1.0:
             # right
@@ -350,7 +353,7 @@ if __name__ == '__main__':
 
         else:
             # default pose
-            set_servo(10, [ 10.,-20.,-130.,0.,0., -10.,-20.,-130.,0.,0.,  0.,0.,-30.,   0.,0.,-30.])
+            set_servo(50, [ lx1,ly1,lz1,0.,0., rx1,ry1,rz1,0.,0.,  0.,0.,-30.,   0.,0.,-30.])
             # set_servo_directly(10, [0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0])
 
 
