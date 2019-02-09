@@ -246,20 +246,28 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
 
-        if joy_data.axes[5] >= 1.0:
+        if joy_data.axes[5] >= 1.0 and not joy_data.buttons[6] == 1:
             # forward
             set_servo(    40,  [lx2,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
             set_servo(    40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
-                if not joy_data.axes[5] >= 1.0: break
+                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
                 set_servo(40,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,2.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
                 set_servo(40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
-                if not joy_data.axes[5] >= 1.0: break
+                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
                 set_servo(40,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,2.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # back left
                 set_servo(40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
-                if not joy_data.axes[5] >= 1.0: break
-            set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
-            set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+            if joy_data.buttons[6] == 1:
+                # fall
+                set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   30.,-30.,-60.,   30.,-30.,-60.])
+                set_servo(    50,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+                set_servo(   300,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+                set_servo(   300,  [lx2,-50.,-60.,0.,0., rx2,-50,-60,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+            else:
+                # stop
+                set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+                set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
 
         elif joy_data.axes[5] <= -1.0:
             # backward
@@ -320,23 +328,6 @@ if __name__ == '__main__':
             set_servo(    100,  [ 20.,ly1,-110.,0.,0.,  -20.,ly1,-110.,0.,0.,  0.,  0.,-60.,   0.,  0.,-60.])
             set_servo(    200,  [ 20.,ly1,-110.,0.,0.,  -20.,ly1,-110.,0.,0.,  0.,  0.,-60.,   0.,  0.,-60.])
 
-        elif joy_data.buttons[2] == 1:
-            # punch right
-            set_servo( 20, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,   0.,-30.,-90.])
-            set_servo( 20, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,  90.,-30.,-90.])
-            set_servo(100, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,  90.,-45.,-90.])
-
-        elif joy_data.buttons[0] == 1:
-            # punch left
-            set_servo( 20, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,   0.,-30.,-60.,  0.,0.,-30.])
-            set_servo( 20, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,  90.,-30.,-90.,  0.,0.,-30.])
-            set_servo(100, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,  90.,-45.,-90.,  0.,0.,-30.])
-
-        elif joy_data.buttons[1] == 1:
-            # get down
-            set_servo(50, [ lx2,ly1,lz0,0.,0., rx2,ry1,rz0,0.,0.,  0.,0.,-30.,   0.,0.,-30.])
-
-
         elif joy_data.buttons[6] == 1 and joy_data.buttons[2] == 1:
             # get up front
             set_servo(200, [ 0.,0.,-60.,0.,0.,   0.,0.,-60.,0.,0.,    0., 90., 60.,     0., 90., 60.])   # ready arms
@@ -385,6 +376,23 @@ if __name__ == '__main__':
         #     set_servo(100, [ 10.,-20.,-130.,0.,0., -10.,-20.,-130.,0.,0., -80.,-50.,-90.,  -80.,-50.,-90.])
         #     # back to default pose
         #     set_servo(100, [ 10.,-20.,-130.,0.,0., -10.,-20.,-130.,0.,0., 30.,0.,-30.,  30.,0.,-30.])
+
+        elif joy_data.buttons[2] == 1:
+            # punch right
+            set_servo( 20, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,   0.,-30.,-90.])
+            set_servo( 20, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,  90.,-30.,-90.])
+            set_servo(100, [ lx1,ly2,-120,0.,0., rx1,ry0,-120,0.,0.,  0.,0.,-30.,  90.,-45.,-90.])
+
+        elif joy_data.buttons[0] == 1:
+            # punch left
+            set_servo( 20, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,   0.,-30.,-60.,  0.,0.,-30.])
+            set_servo( 20, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,  90.,-30.,-90.,  0.,0.,-30.])
+            set_servo(100, [ lx1,ly0,-120,0.,0., rx1,ry2,-120,0.,0.,  90.,-45.,-90.,  0.,0.,-30.])
+
+        elif joy_data.buttons[1] == 1:
+            # get down
+            set_servo(50, [ lx2,ly1,lz0,0.,0., rx2,ry1,rz0,0.,0.,  0.,0.,-30.,   0.,0.,-30.])
+
 
         elif joy_data.buttons[8] == 1:
             # power off
