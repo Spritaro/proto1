@@ -33,6 +33,12 @@ class Servo(object):
 servos = [ Servo() for i in range(SERVONUM) ]
 
 
+def servo_poweroff():
+    for i in range(SERVONUM):
+        pwm.set_pwm(i, 0, 0)
+        rate.sleep()
+
+
 def conv_ang(ang):
     return int((SERVOMAX - SERVOMIN) * (ang + 90.0) / 180.0 + SERVOMIN)
 
@@ -356,9 +362,11 @@ if __name__ == '__main__':
         #     # back to default pose
         #     set_servo(100, [ 10.,-20.,-130.,0.,0., -10.,-20.,-130.,0.,0., 30.,0.,-30.,  30.,0.,-30.])
 
-        # elif joy_data.buttons[8] == 1:
-        #     # power off
-        #     while not joy_data.buttons[9] == 1:
+        elif joy_data.buttons[8] == 1:
+            # power off
+            servo_poweroff()
+            while not joy_data.buttons[9] == 1:
+                pass
 
         else:
             # default pose
