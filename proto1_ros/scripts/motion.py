@@ -129,6 +129,12 @@ def ik(x, y, z, a, b):
 # right shoulder pitch, roll,
 ids = [8,9,10,11, 7,6,5,4, 12,13,14, 3,2,1]
 def set_servo_directly(time, angle):
+    # CCW
+    angle[1] *= -1   # left thigh pitch
+    angle[6] *= -1   # right ankle pitch
+    angle[9] *= -1  # left shoulder roll
+    angle[10] *= -1  # left elbow
+
     # offsets
     angle[0] += 20. # left thigh roll
     angle[1] += 85. # left thigh pitch
@@ -198,11 +204,11 @@ def set_servo(time, target):
     target_angle[12] = target[14]
     target_angle[13] = target[15]
 
-    # CCW
-    target_angle[1] *= -1   # left thigh pitch
-    target_angle[6] *= -1   # right ankle pitch
-    target_angle[9] *= -1  # left shoulder roll
-    target_angle[10] *= -1  # left elbow
+    # # CCW
+    # target_angle[1] *= -1   # left thigh pitch
+    # target_angle[6] *= -1   # right ankle pitch
+    # target_angle[9] *= -1  # left shoulder roll
+    # target_angle[10] *= -1  # left elbow
 
     set_servo_directly(time, target_angle)
 
@@ -338,9 +344,10 @@ if __name__ == '__main__':
             set_servo(200, [10.,-30.,-130.,0.,0., -10.,-30.,-130.,0.,0.,   0.,-30.,-60.,   0.,-30.,-60.])    # stand up
             set_servo(100, [10.,-30.,-130.,0.,0., -10.,-30.,-130.,0.,0.,   0.,-30.,-60.,   0.,-30.,-60.])
 
-        # elif joy_data.buttons[6] == 1 and joy_data.buttons[1] == 1:
-        #     # get up back
-        #     pass
+        elif joy_data.buttons[6] == 1 and joy_data.buttons[0] == 1:
+            # T pose
+            set_servo_directly(50, [0,0,0,0, 0,0,0,0, 0,40,-90, 0,40,-90])
+            set_servo_directly(50, [0,0,0,0, 0,0,0,0, 0,40,-90, 0,40,-90])
 
         # elif joy_data.buttons[6] == 1 and joy_data.buttons[3] == 1:
         #     # throw dice
