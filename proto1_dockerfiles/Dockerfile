@@ -1,5 +1,4 @@
-#FROM osrf/ros:kinetic-desktop-full
-FROM ubuntu:16.04
+FROM ros:kinetic
 
 SHELL ["/bin/bash", "-c"]
 
