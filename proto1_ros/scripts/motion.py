@@ -144,7 +144,7 @@ def set_servo_directly(time, angle):
     angle[4] += 13. # right right roll
     angle[5] -= 30. # right thigh pitch
     angle[6] += 65. - 6. # right ankle pitch
-    angle[7] += 17.+2. # right ankle roll
+    angle[7] += 17.+5. # right ankle roll
 
     angle[8] += 0. # left shoulder pitch
     angle[9] += 10. # left shoulder roll
@@ -231,12 +231,13 @@ if __name__ == '__main__':
     # side
     lx0, rx0 =  0.,   0.
     lx1, rx1 = 10., -10.
-    lx2, rx2 = 20., -20.
+    lx2, rx2 = 12., -12.
+    lxc, rxc = 40., -40.
 
     # forward
-    ly0, ry0 = -30.-20., -30.-20.
+    ly0, ry0 = -20.-20., -20.-20.
     ly1, ry1 =   0.-20.,   0.-20.
-    ly2, ry2 =  30.-20.,  30.-20.
+    ly2, ry2 =  20.-20.,  20.-20.
 
     # upward
     lzf, rzf = -145, -148 # first height
@@ -248,26 +249,41 @@ if __name__ == '__main__':
 
         if joy_data.axes[5] >= 1.0 and not joy_data.buttons[6] == 1:
             # forward
-            set_servo(    40,  [lx2,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
-            set_servo(    40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+            set_servo(    30,  [lx1,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
+            set_servo(    30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
-                set_servo(40,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,2.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
-                set_servo(40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
+                set_servo(30,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0.,   0.,-15.,-60.,  10.,-15.,-60.]) # back right
+                set_servo(30,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
-                set_servo(40,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,2.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # back left
-                set_servo(40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+                set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  10.,-15.,-60.,   0.,-15.,-60.]) # back left
+                set_servo(30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
-            if joy_data.buttons[6] == 1:
-                # fall
-                set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   30.,-30.,-60.,   30.,-30.,-60.])
-                set_servo(    50,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
-                set_servo(   300,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
-                set_servo(   300,  [lx2,-50.,-60.,0.,0., rx2,-50,-60,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
-            else:
-                # stop
-                set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
-                set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            # stop
+            set_servo(    50,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            set_servo(   100,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+
+            # # forward
+            # set_servo(    40,  [lx2,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
+            # set_servo(    40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+            # while True:
+            #     if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+            #     set_servo(40,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,2.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
+            #     set_servo(40,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
+            #     if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+            #     set_servo(40,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,2.,0.,  20.,-15.,-60., -20.,-15.,-60.]) # back left
+            #     set_servo(40,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,2.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+            #     if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+            # if joy_data.buttons[6] == 1:
+            #     # fall
+            #     set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   30.,-30.,-60.,   30.,-30.,-60.])
+            #     set_servo(    50,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+            #     set_servo(   300,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+            #     set_servo(   300,  [lx2,-50.,-60.,0.,0., rx2,-50,-60,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+            # else:
+            #     # stop
+            #     set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            #     set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
 
         elif joy_data.axes[5] <= -1.0:
             # backward
