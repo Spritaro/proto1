@@ -227,6 +227,24 @@ if __name__ == '__main__':
 
     # button 0:X 1:A 2:B 3:Y 4:LB 5:RB 6:LT 7:RT 8:Back 9:Start 10:LStick 11:RStick
     # axes 0:R-X 1:R+Y 2:L-X 3:LY 4:P-X 5:PY
+    BX = 0  # X
+    BA = 1  # A
+    BB = 2  # B
+    BY = 3  # Y
+    BLB = 4 # left button
+    BRB = 5 # right button
+    BLT = 6 # left trigger
+    BRT = 7 # right trigger
+    BBack = 8
+    BStart = 9
+    BLStick = 10
+    BRStick = 11
+    ARX = 0
+    ARY = 1
+    ALX = 2
+    ALY = 3
+    APX = 4
+    APY = 5
 
     # side
     lx0, rx0 =  0.,   0.
@@ -247,18 +265,18 @@ if __name__ == '__main__':
 
     while not rospy.is_shutdown():
 
-        if joy_data.axes[5] >= 1.0 and not joy_data.buttons[6] == 1:
+        if joy_data.axes[APY] >= 1.0 and not joy_data.buttons[BLT] == 1:
             # forward
             set_servo(    30,  [lx1,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
             set_servo(    30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
-                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+                if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
                 set_servo(30,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0.,   0.,-15.,-60.,  20.,-15.,-60.]) # back right
                 set_servo(30,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
-                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+                if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
                 set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  20.,-15.,-60.,   0.,-15.,-60.]) # back left
                 set_servo(30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
-                if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
+                if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
             # stop
             set_servo(    50,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
             set_servo(   100,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
