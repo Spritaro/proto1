@@ -231,19 +231,19 @@ if __name__ == '__main__':
     # side
     lx0, rx0 =  0.,   0.
     lx1, rx1 = 10., -10.
-    lx2, rx2 = 12., -12.
+    lx2, rx2 = 15., -15.
     lxc, rxc = 40., -40.
 
     # forward
-    ly0, ry0 = -20.-20., -20.-20.
+    ly0, ry0 = -25.-20., -25.-20.
     ly1, ry1 =   0.-20.,   0.-20.
-    ly2, ry2 =  20.-20.,  20.-20.
+    ly2, ry2 =  25.-20.,  25.-20.
 
     # upward
     lzf, rzf = -145, -148 # first height
     lz0, rz0 = -100, -100
     lz1, rz1 = -140, -140
-    lz2, rz2 = -140, -140
+    lz2, rz2 = -138, -138
 
     while not rospy.is_shutdown():
 
@@ -253,10 +253,10 @@ if __name__ == '__main__':
             set_servo(    30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
-                set_servo(30,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0.,   0.,-15.,-60.,  10.,-15.,-60.]) # back right
+                set_servo(30,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0.,   0.,-15.,-60.,  20.,-15.,-60.]) # back right
                 set_servo(30,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
-                set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  10.,-15.,-60.,   0.,-15.,-60.]) # back left
+                set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  20.,-15.,-60.,   0.,-15.,-60.]) # back left
                 set_servo(30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                 if not joy_data.axes[5] >= 1.0 or joy_data.buttons[6] == 1: break
             # stop
