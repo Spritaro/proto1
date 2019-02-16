@@ -258,7 +258,7 @@ if __name__ == '__main__':
     ly2, ry2 =  25.-20.,  25.-20.
 
     # upward
-    lzf, rzf = -145, -148 # first height
+    lzf, rzf = -148, -148 # first height
     lz0, rz0 = -100, -100
     lz1, rz1 = -140, -140
     lz2, rz2 = -138, -138
@@ -267,7 +267,7 @@ if __name__ == '__main__':
 
         if joy_data.axes[APY] >= 1.0 and not joy_data.buttons[BLT] == 1:
             # forward
-            set_servo(    30,  [lx1,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
+            set_servo(    30,  [lx2,ly1,lzf,0.,0., rx2,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # kick left
             set_servo(    30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
             while True:
                 if joy_data.buttons[BRB] == 1:
