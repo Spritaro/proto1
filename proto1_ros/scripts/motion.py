@@ -285,7 +285,7 @@ if __name__ == '__main__':
                     set_servo(30,  [lx2,ly2,lz1,0.,0., rx2,ry0,rz2,0.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back right
                     set_servo(30,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
                     if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
-                    set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # back left
+                    set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0., -20.,-15.,-60.,  20.,-15.,-60.]) # back left
                     set_servo(30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                     if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
                 else:
