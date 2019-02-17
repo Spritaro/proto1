@@ -297,9 +297,16 @@ if __name__ == '__main__':
                     set_servo(30,  [lx2,ly0,lz2,0.,0., rx2,ry2,rz1,0.,0.,  20.,-15.,-60.,   0.,-15.,-60.]) # back left
                     set_servo(30,  [lx1,ly1,lz0,0.,0., rx1,ry1,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                     if not joy_data.axes[APY] >= 1.0 or joy_data.buttons[BLT] == 1: break
-            # stop
-            set_servo(    50,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
-            set_servo(   100,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            if joy_data.buttons[BLT] == 1:
+                # fall
+                set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ly1,lz0,0.,0.,   30.,-30.,-60.,   30.,-30.,-60.])
+                set_servo(    50,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+                set_servo(   300,  [lx2,-50.,lz1,0.,0., rx2,-50,lz1,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+                set_servo(   300,  [lx2,-50.,-60.,0.,0., rx2,-50,-60,0.,0.,  30.,-30.,-60.,  30.,-30.,-60.])
+            else:
+                # stop
+                set_servo(    50,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+                set_servo(   100,  [lxc,ly1,lz0,0.,0., rxc,ly1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
 
         elif joy_data.axes[5] <= -1.0:
             # backward
