@@ -314,14 +314,14 @@ if __name__ == '__main__':
             set_servo(    30,  [lx1,ly1,lz1,0.,0., rx1,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
             while True:
                 if not joy_data.axes[5] <= -1.0: break
-                set_servo(30,  [lx2,ly2-10,lz2,0.,0., rx2,ry0-10,rz1,0.,0.,  -5.,-15.,-60.,   5.,-15.,-60.]) # front left
-                set_servo(30,  [lx1,ly1-10,lz0,0.,0., rx1,ry1-10,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
+                set_servo(30,  [lx2,ly2-5,lz2,0.,0., rx2,ry0-5,rz1,0.,0., -20.,-15.,-60.,   0.,-15.,-60.]) # front left
+                set_servo(30,  [lx1,ly1-5,lz0,0.,0., rx1,ry1-5,rz1,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift left
                 if not joy_data.axes[5] <= -1.0: break
-                set_servo(30,  [lx2,ly0-10,lz1,0.,0., rx2,ry2-10,rz2,0.,0.,  -5.,-15.,-60.,   5.,-15.,-60.]) # front right
-                set_servo(30,  [lx1,ly1-10,lz1,0.,0., rx1,ry1-10,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
+                set_servo(30,  [lx2,ly0-5,lz1,0.,0., rx2,ry2-5,rz2,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # front right
+                set_servo(30,  [lx1,ly1-5,lz1,0.,0., rx1,ry1-5,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.]) # lift right
                 if not joy_data.axes[5] <= -1.0: break
-            set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ry1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
-            set_servo(   100,  [lx2,ly1,lz0,0.,0., rx2,ry1,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            set_servo(    50,  [lx2,ly1-5,lz0,0.,0., rx2,ry1-5,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
+            set_servo(   100,  [lx2,ly1-5,lz0,0.,0., rx2,ry1-5,lz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
 
         elif joy_data.axes[4] <= -1.0:
             # right
