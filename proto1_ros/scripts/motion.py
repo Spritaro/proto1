@@ -320,8 +320,8 @@ if __name__ == '__main__':
             # right
             while True:
                 set_servo(30,  [10.,ly1,lz1,0.,0., -10.,ry1,rz2,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # kick right
-                set_servo(30,  [30.,ly1,lz1,0.,0., -35.,ry1,rz0,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # lift right
-                set_servo(30,  [30.,ly1,lz2,0.,0., -35.,ry1,rz1,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # kick left
+                set_servo(30,  [30.,ly1,lz1,0.,0., -40.,ry1,rz0,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # lift right
+                set_servo(30,  [30.,ly1,lz2,0.,0., -40.,ry1,rz1,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # kick left
                 set_servo(30,  [10.,ly1,lz0,0.,0., -10.,ry1,rz1,-5.,0.,  0.,  0.,-60.,   0.,  0.,-60.]) # lift left
                 if not joy_data.axes[4] <= -1.0: break
             set_servo(    50,  [lx2,ly1,lz0,0.,0., rx2,ry1,rz0,0.,0.,  0.,-15.,-60.,   0.,-15.,-60.])
@@ -331,8 +331,8 @@ if __name__ == '__main__':
             # left
             while True:
                 set_servo(30,  [ 10.,ly1,lz2,9.,0., -10.,ry1,rz1,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # kick right
-                set_servo(30,  [ 30.,ly1,lz0,9.,0., -30.,ry1,rz1,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # lift right
-                set_servo(30,  [ 30.,ly1,lz1,9.,0., -30.,ry1,rz2,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # kick left
+                set_servo(30,  [ 40.,ly1,lz0,9.,0., -30.,ry1,rz1,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # lift right
+                set_servo(30,  [ 40.,ly1,lz1,9.,0., -30.,ry1,rz2,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # kick left
                 set_servo(30,  [ 10.,ly1,lz1,9.,0., -10.,ry1,rz0,0.,0.,   0.,  0.,-60.,   0.,  0.,-60.]) # lift left
                 if not joy_data.axes[4] >= 1.0: break
             set_servo(    50,  [ lx2,ly1,lz0,0.,0.,  rx2,ry1,rz0,0.,0.,   0.,-15.,-60.,   0.,-15.,-60.])
